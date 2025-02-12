@@ -10,10 +10,11 @@ import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import GameScreen from '../screens/GameScreen';
 import GamePlayScreen from '../screens/GamePlayScreen';
 import CartScreen from '../screens/CartScreen';
+import { Product } from '../services/api';
 
 export type RootStackParamList = {
   HomeMain: undefined;
-  ProductDetails: {product: any};
+  ProductDetails: {product: Product};
   GameMain: undefined;
   GamePlay: undefined;
   Cart: undefined;
