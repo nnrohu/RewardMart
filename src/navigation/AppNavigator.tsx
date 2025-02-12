@@ -11,6 +11,8 @@ import GameScreen from '../screens/GameScreen';
 import GamePlayScreen from '../screens/GamePlayScreen';
 import CartScreen from '../screens/CartScreen';
 import { Product } from '../services/api';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 export type RootStackParamList = {
   HomeMain: undefined;
@@ -90,6 +92,12 @@ const getTabBarIcon = (
 };
 
 const AppNavigator = () => {
+  const cartItemCount = useSelector((state: RootState) =>
+    Object.values(state.cart.items).reduce(
+      (total, item) => total + item.quantity,
+      0,
+    ),
+  );
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -108,7 +116,10 @@ const AppNavigator = () => {
         component={GameStack}
         options={{headerShown: false}}
       />
-      <Tab.Screen name="Cart" component={CartScreen} />
+      <Tab.Screen name="Cart" component={CartScreen}
+        options={{
+        tabBarBadge: cartItemCount > 0 ? cartItemCount : undefined,
+      }}/>
     </Tab.Navigator>
   );
 };
