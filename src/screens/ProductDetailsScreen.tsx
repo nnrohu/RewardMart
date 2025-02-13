@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,13 @@ import {
   Dimensions,
   Image,
 } from 'react-native';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
-import {RootStackParamList} from '../navigation/AppNavigator';
+import { RootStackParamList } from '../navigation/AppNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PaginationDot from '../components/PaginationDot';
-import {addToCart} from '../store/cartSlice';
+import { addToCart } from '../store/cartSlice';
 import Header from '../components/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -23,21 +23,21 @@ type ProductDetailsScreenRouteProp = RouteProp<
   'ProductDetails'
 >;
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const ProductDetailsScreen: React.FC = () => {
   const route = useRoute<ProductDetailsScreenRouteProp>();
-  const {product} = route.params;
+  const { product } = route.params;
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const dispatch = useDispatch();
 
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const renderCarouselItem = ({item}: {item: string}) => (
+  const renderCarouselItem = ({ item }: { item: string }) => (
     <View style={styles.carouselItem}>
       <Image
-        source={{uri: item}}
+        source={{ uri: item }}
         style={styles.carouselImage}
         resizeMode="center"
       />
@@ -50,34 +50,34 @@ const ProductDetailsScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Header 
-        title="Product Details" 
-        showBack={true} 
+      <Header
+        title="Product Details"
+        showBack={true}
         onBack={() => navigation.goBack()}
       />
       <ScrollView>
         <View>
-        <Carousel
-          data={product.images}
-          renderItem={renderCarouselItem}
-          sliderWidth={width}
-          itemWidth={width}
-          autoplay
-          loop
-          autoplayDelay={3000}
-          onSnapToItem={index => setActiveSlide(index)}
-        />
-        <PaginationDot images={product.images} activeSlide={activeSlide} />
-      </View>
-      <View style={styles.content}>
-        <Text style={styles.name}>{product.name}</Text>
-        <Text style={styles.price}>${product.price.toFixed(2)}</Text>
-        <Text style={styles.description}>{product.description}</Text>
-        <TouchableOpacity style={styles.addButton} onPress={handleAddToCart}>
-          <Icon name="cart" size={24} color="white" />
-          <Text style={styles.addButtonText}>Add to Cart</Text>
-        </TouchableOpacity>
-      </View>
+          <Carousel
+            data={product.images}
+            renderItem={renderCarouselItem}
+            sliderWidth={width}
+            itemWidth={width}
+            autoplay
+            loop
+            autoplayDelay={3000}
+            onSnapToItem={index => setActiveSlide(index)}
+          />
+          <PaginationDot images={product.images} activeSlide={activeSlide} />
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.name}>{product.name}</Text>
+          <Text style={styles.price}>${product.price.toFixed(2)}</Text>
+          <Text style={styles.description}>{product.description}</Text>
+          <TouchableOpacity style={styles.addButton} onPress={handleAddToCart}>
+            <Icon name="cart" size={24} color="white" />
+            <Text style={styles.addButtonText}>Add to Cart</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );

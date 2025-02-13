@@ -3,9 +3,6 @@ import {
   View, Text, StyleSheet, TouchableOpacity, Dimensions, Alert, Animated, Image
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppNavigator';
 import { setCurrentScore, setDiscountCode } from '../store/gameSlice';
 import Header from '../components/Header';
 
@@ -13,7 +10,6 @@ const { width } = Dimensions.get('window');
 const GRID_SIZE = 4;
 const CARD_SIZE = (width - 64) / GRID_SIZE;
 
-// Define the Card type
 interface Card {
   id: number;
   image: any;
@@ -23,37 +19,43 @@ interface Card {
 }
 
 const IMAGES = [
-  require('../assets/discount_10.webp'),
-  require('../assets/discount_20.webp'),
-  require('../assets/discount_30.webp'),
-  require('../assets/discount_10.webp'),
-  require('../assets/discount_20.webp'),
-  require('../assets/discount_30.webp'),
+  { id: 1, isFlipped: false, isMatched: false, image: require('../assets/discount_10.webp') },
+  { id: 2, isFlipped: false, isMatched: false, image: require('../assets/discount_20.webp') },
+  { id: 3, isFlipped: false, isMatched: false, image: require('../assets/discount_30.webp') },
+  { id: 4, isFlipped: false, isMatched: false, image: require('../assets/discount_10.webp') },
+  { id: 5, isFlipped: false, isMatched: false, image: require('../assets/discount_20.webp') },
+  { id: 6, isFlipped: false, isMatched: false, image: require('../assets/discount_30.webp') },
+  { id: 7, isFlipped: false, isMatched: false, image: require('../assets/discount_10.webp') },
+  { id: 8, isFlipped: false, isMatched: false, image: require('../assets/discount_20.webp') },
+  { id: 9, isFlipped: false, isMatched: false, image: require('../assets/discount_30.webp') },
+  { id: 10, isFlipped: false, isMatched: false, image: require('../assets/discount_10.webp') },
+  { id: 11, isFlipped: false, isMatched: false, image: require('../assets/discount_20.webp') },
+  { id: 12, isFlipped: false, isMatched: false, image: require('../assets/discount_30.webp') },
+  { id: 13, isFlipped: false, isMatched: false, image: require('../assets/discount_10.webp') },
+  { id: 14, isFlipped: false, isMatched: false, image: require('../assets/discount_20.webp') },
+  { id: 15, isFlipped: false, isMatched: false, image: require('../assets/discount_30.webp') },
 ];
 
 const GamePlayScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  console.log('GamePlayScreen mounted');
   const dispatch = useDispatch();
   const [cards, setCards] = useState<Card[]>([]);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [moves, setMoves] = useState<number>(0);
   const [gameStarted, setGameStarted] = useState<boolean>(false);
+  const [gameCompleted, setGameCompleted] = useState<boolean>(false);
 
   const initializeGame = useCallback(() => {
-    const shuffledImages = [...IMAGES, ...IMAGES]
+    const shuffledImages = IMAGES
       .sort(() => Math.random() - 0.5)
-      .map((image, index) => ({
-        id: index,
-        image,
-        isFlipped: false,
-        isMatched: false,
+      .map((image) => ({
+        ...image,
         animatedValue: new Animated.Value(0),
       }));
     setCards(shuffledImages);
     setSelectedCards([]);
     setMoves(0);
     setGameStarted(false);
+    setGameCompleted(false);
   }, []);
 
   useEffect(() => {
@@ -80,10 +82,11 @@ const GamePlayScreen = () => {
   }, [selectedCards]);
 
   useEffect(() => {
-    if (cards.every(card => card.isMatched) && gameStarted) {
+    if (!gameCompleted && cards.every(card => card.isMatched) && gameStarted) {
+      setGameCompleted(true);
       endGame();
     }
-  }, [cards, gameStarted]);
+  }, [cards, gameStarted, gameCompleted]);
 
   const flipCard = (card: Card, flipToFront: boolean) => {
     Animated.timing(card.animatedValue, {
@@ -107,92 +110,85 @@ const GamePlayScreen = () => {
     setSelectedCards(prev => [...prev, card]);
   };
 
+  const getRewardInfo = (moves: number) => {
+    if (moves <= 10) return { code: 'MASTER30', discount: 30, rank: '🏆 Master' };
+    if (moves <= 15) return { code: 'GREAT20', discount: 20, rank: '🥈 Expert' };
+    if (moves <= 20) return { code: 'GOOD10', discount: 10, rank: '🥉 Skilled' };
+    return { code: 'TRY5', discount: 5, rank: '🎮 Player' };
+  };
+
   const endGame = () => {
-    let discountCode = '';
-    let scoreMultiplier = 0;
-    if (moves <= 10) {
-      discountCode = 'MASTER30';
-      scoreMultiplier = 30;
-    } else if (moves <= 15) {
-      discountCode = 'GREAT20';
-      scoreMultiplier = 20;
-    } else if (moves <= 20) {
-      discountCode = 'GOOD10';
-      scoreMultiplier = 10;
-    } else {
-      discountCode = 'TRY5';
-      scoreMultiplier = 5;
-    }
+    const reward = getRewardInfo(moves);
 
-    dispatch(setCurrentScore(scoreMultiplier));
-    dispatch(setDiscountCode(discountCode));
+    dispatch(setCurrentScore(reward.discount));
+    dispatch(setDiscountCode(reward.code));
 
-    Alert.alert(
-      'Congratulations!',
-      `You completed the game in ${moves} moves!\nYour discount code is: ${discountCode}`,
-      [{ text: 'Play Again', onPress: initializeGame }]
-    );
+    setTimeout(() => {
+      Alert.alert(
+        '🎉 Congratulations!',
+        `${reward.rank} Level Achieved!\n\nMoves: ${moves}\nDiscount: ${reward.discount}%\nCode: ${reward.code}`,
+        [
+          {
+            text: '🔄 Play Again',
+            onPress: initializeGame,
+            style: 'default'
+          }
+        ],
+        { cancelable: false }
+      );
+    }, 500);
   };
 
   return (
-    <View>
-      <Header
-        title="Memory Game"
-        showBack={true}
-        onBack={() => {
-          navigation.goBack();
-        }}
-      />
-      <View style={styles.container}>
-        <Text style={styles.title}>Memory Game</Text>
-        <Text style={styles.moves}>Moves: {moves}</Text>
-        <View style={styles.grid}>
-          {cards.map(card => {
-            const frontInterpolate = card.animatedValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: ['180deg', '0deg'],
-            });
+    <View style={styles.container}>
+      <Header title="Memory Game" showBack={true} />
+      <Text style={styles.moves}>Moves: {moves}</Text>
+      <View style={styles.grid}>
+        {cards.map(card => {
+          const frontInterpolate = card.animatedValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['180deg', '0deg'],
+          });
 
-            const backInterpolate = card.animatedValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: ['0deg', '-180deg'],
-            });
+          const backInterpolate = card.animatedValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['0deg', '-180deg'],
+          });
 
-            return (
-              <TouchableOpacity key={card.id} onPress={() => handleCardPress(card)} disabled={card.isMatched}>
-                <View style={styles.cardContainer}>
-                  {/* Front (Image) */}
-                  <Animated.View
-                    style={[
-                      styles.card,
-                      styles.cardFront,
-                      { transform: [{ rotateY: frontInterpolate }] },
-                    ]}
-                  >
-                    <Image source={card.image} style={styles.cardImage} />
-                  </Animated.View>
+          return (
+            <TouchableOpacity key={card.id} onPress={() => handleCardPress(card)} disabled={card.isMatched}>
+              <View style={styles.cardContainer}>
+                {/* Front (Image) */}
+                <Animated.View
+                  style={[
+                    styles.card,
+                    styles.cardFront,
+                    { transform: [{ rotateY: frontInterpolate }] },
+                  ]}
+                >
+                  <Image source={card.image} style={styles.cardImage} />
+                </Animated.View>
 
-                  {/* Back (Hidden Side) */}
-                  <Animated.View
-                    style={[
-                      styles.card,
-                      styles.cardBack,
-                      { transform: [{ rotateY: backInterpolate }] },
-                    ]}
-                  >
-                    <View style={styles.cardHidden} />
-                  </Animated.View>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-        {!gameStarted && (
-          <View style={styles.overlayContainer}>
-            <Text style={styles.overlayText}>Tap any card to start the game!</Text>
-          </View>
-        )}
+                {/* Back (Hidden Side) */}
+                <Animated.View
+                  style={[
+                    styles.card,
+                    styles.cardBack,
+                    { transform: [{ rotateY: backInterpolate }] },
+                  ]}
+                >
+                  <View style={styles.cardHidden} />
+                </Animated.View>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
+      {!gameStarted && (
+        <View style={styles.overlayContainer}>
+          <Text style={styles.overlayText}>Tap any card to start the game!</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -200,7 +196,7 @@ const GamePlayScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F2F2F7', padding: 16 },
   title: { fontSize: 24, fontWeight: '700', textAlign: 'center', marginBottom: 16 },
-  moves: { fontSize: 18, textAlign: 'center', marginBottom: 16 },
+  moves: { fontSize: 18, textAlign: 'center', marginVertical: 16 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' },
   cardContainer: {
     position: 'relative',

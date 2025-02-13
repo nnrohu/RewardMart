@@ -49,6 +49,8 @@ const BannerCarousel: React.FC<BannerCarouselProps> = ({banners}) => {
 const styles = StyleSheet.create({
   container: {
     marginVertical: 16,
+    backgroundColor: 'gray',
+    borderRadius:8
   },
   slide: {
     borderRadius: 12,

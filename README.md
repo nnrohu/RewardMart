@@ -1,6 +1,18 @@
 # RewardMart - React Native E-commerce App with Interactive Game
 
-A modern e-commerce mobile application built with React Native, featuring an engaging interactive game that rewards users with promotional discounts.
+A modern e-commerce mobile application built with React Native, featuring an engaging interactive memory game that rewards users with promotional discounts.
+
+## Screenshots
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+<img src="src/assets/img_readme/Screenshot_1739437137.png" width="200" alt="Home Screen">
+<img src="src/assets/img_readme/Screenshot_1739437147.png" width="200" alt="Product Details">
+<img src="src/assets/img_readme/Screenshot_1739437243.png" width="200" alt="Memory Game">
+<img src="src/assets/img_readme/Screenshot_1739437248.png" width="200" alt="Game Play">
+<img src="src/assets/img_readme/Screenshot_1739437281.png" width="200" alt="Game Complete">
+
+</div>
 
 ## Features
 
@@ -21,18 +33,22 @@ A modern e-commerce mobile application built with React Native, featuring an eng
 ### Memory Game Feature
 
 #### Game Mechanics
-- Interactive card-matching memory game
-- Players flip cards to find matching discount pairs
-- Score tracking based on number of moves
-- Smooth card flip animations
-- Progress tracking with move counter
+- 🎮 Interactive card-matching memory game
+- 🔄 Players flip cards to find matching pairs
+- 📊 Score tracking based on number of moves
+- ✨ Smooth card flip animations with React Native Animated
+- 🎯 Progress tracking with move counter
+- 🏆 Achievement system with different reward tiers
 
 #### Reward System
 Based on the number of moves to complete the game:
-- 🏆 Master Player (10 moves or less): 30% OFF (Code: MASTER30)
-- 🥈 Expert Player (15 moves or less): 20% OFF (Code: GREAT20)
-- 🥉 Skilled Player (20 moves or less): 10% OFF (Code: GOOD10)
-- 🎮 Game Participant (more than 20 moves): 5% OFF (Code: TRY5)
+
+| Rank | Moves | Discount | Code |
+|------|-------|-----------|------|
+| 🏆 Master | ≤ 10 | 30% OFF | MASTER30 |
+| 🥈 Expert | ≤ 15 | 20% OFF | GREAT20 |
+| 🥉 Skilled | ≤ 20 | 10% OFF | GOOD10 |
+| 🎮 Player | > 20 | 5% OFF | TRY5 |
 
 #### Technical Implementation
 - Built using React Native's Animated API for smooth transitions
@@ -50,6 +66,9 @@ Based on the number of moves to complete the game:
 - Xcode (for iOS development)
 - CocoaPods (for iOS dependencies)
 - json-server (for mock API)
+- ```bash
+adb reverse tcp:3000 tcp:3000
+- ```
 
 ## Server Setup
 
@@ -90,7 +109,7 @@ The server uses `db.json` which includes:
 1. Clone the repository:
 
 ```bash
-git clone [repository-url]
+git clone https://github.com/nnrohu/RewardMart.git
 cd RewardMart
 ```
 
@@ -147,17 +166,29 @@ src/
 ├── store/         # Redux store configuration and slices
 ├── services/      # API services
 ├── game/          # Interactive game components
-└── utils/         # Utility functions and constants
+├── App.tsx         # Main entry point
+└── index.js        # Entry point for the app
 ```
 
 ## Technologies Used
 
-- React Native
-- Redux Toolkit
-- React Navigation
-- Axios
-- json-server
-- TypeScript
+### Frontend
+- ⚛️ React Native
+- 🔄 Redux Toolkit for state management
+- 🧭 React Navigation for routing
+- 📝 TypeScript for type safety
+- 🎨 Custom animations with React Native Animated
+- 💅 Custom styled components
+
+### Backend & Data
+- 🔄 Axios for API requests
+- 📄 json-server for mock API
+- 📦 Local storage for game progress
+
+### Development
+- 📱 React Native CLI
+- 🛠️ TypeScript
+- 📦 npm for package management
 
 ## Contributing
 

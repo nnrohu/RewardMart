@@ -109,31 +109,6 @@ const GameScreen = () => {
             accessibilityHint="Takes you to the game play screen">
             <Text style={styles.playButtonText}>Play Now!</Text>
           </TouchableOpacity>
-
-          <View style={styles.rewardsContainer}>
-            <Text style={styles.rewardsTitle}>Possible Rewards:</Text>
-            <Text style={styles.rewardItem}>• Score 25+ : 5% discount</Text>
-            <Text style={styles.rewardItem}>• Score 50+ : 10% discount</Text>
-            <Text style={styles.rewardItem}>• Score 100+ : 20% discount</Text>
-            <Text style={styles.rewardItem}>• Score 200+ : 30% discount</Text>
-
-            {/* Dynamic display based on score */}
-            {highScore >= 50 && highScore < 100 && (
-              <Text style={styles.rewardItem}>
-                You have earned a 10% discount!
-              </Text>
-            )}
-            {highScore >= 100 && highScore < 200 && (
-              <Text style={styles.rewardItem}>
-                You have earned a 20% discount!
-              </Text>
-            )}
-            {highScore >= 200 && (
-              <Text style={styles.rewardItem}>
-                You have earned a 30% discount!
-              </Text>
-            )}
-          </View>
         </View>
       </ScrollView>
     </View>

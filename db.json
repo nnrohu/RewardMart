@@ -124,19 +124,18 @@
   "banners": [
     {
       "id": 1,
-      "image": "https://cdn.dummyjson.com/banners/luxury-fragrances.jpg",
+      "image": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
       "title": "Luxury Fragrances Collection"
     },
     {
       "id": 2,
-      "image": "https://cdn.dummyjson.com/banners/designer-furniture.jpg",
+      "image": "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
       "title": "Designer Furniture Sale"
     },
     {
       "id": 3,
-      "image": "https://cdn.dummyjson.com/banners/new-arrivals.jpg",
+      "image": "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/thumbnail.png",
       "title": "New Arrivals - Up to 40% Off"
     }
-  ],
-  "cart": []
+  ]
 }
