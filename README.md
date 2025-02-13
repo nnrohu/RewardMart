@@ -10,8 +10,8 @@ A modern e-commerce mobile application built with React Native, featuring an eng
 <img src="src/assets/img_readme/Screenshot_1739437147.png" width="200" alt="Product Details">
 <img src="src/assets/img_readme/Screenshot_1739437248.png" width="200" alt="Game Play">
 <img src="src/assets/img_readme/Screenshot_1739437243.png" width="200" alt="Game Play 2">
-<img src="src/assets/img_readme/Screenshot_1739437758.png" width="200" alt="Game Play 2">
-<img src="src/assets/img_readme/Screenshot_1739437778.png" width="200" alt="Game Play 2">
+<img src="src/assets/img_readme/Screenshot_1739437758.png" width="200" alt="Game Play 3">
+<img src="src/assets/img_readme/Screenshot_1739437778.png" width="200" alt="Game Play 4">
 <img src="src/assets/img_readme/Screenshot_1739437281.png" width="200" alt="Cart Screen">
 
 </div>
