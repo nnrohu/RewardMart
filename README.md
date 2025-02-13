@@ -68,9 +68,7 @@ Based on the number of moves to complete the game:
 - Xcode (for iOS development)
 - CocoaPods (for iOS dependencies)
 - json-server (for mock API)
-- ```bash
-adb reverse tcp:3000 tcp:3000
-- ```
+
 
 ## Server Setup
 
@@ -82,6 +80,10 @@ npm install -g json-server
 2. Start the mock API server:
 ```bash
 npm run server
+```
+3. If Axios network error -> Open a new terminal and run the following command:
+```bash
+adb reverse tcp:3000 tcp:3000
 ```
 
 This will start json-server on:
