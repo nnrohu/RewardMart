@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../store';
 import {updateQuantity, removeFromCart} from '../store/cartSlice';
 import CartItem from '../components/CartItem';
+import Header from '../components/Header';
 
 const CartScreen = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const CartScreen = () => {
 
   return (
     <View style={styles.container}>
+     <Header title="Cart" />
       <FlatList
         data={items}
         renderItem={({item}) => (

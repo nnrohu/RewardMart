@@ -33,16 +33,14 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const HomeStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
         name="HomeMain"
         component={HomeScreen}
-        options={{title: 'Reward Mart'}}
       />
       <Stack.Screen
         name="ProductDetails"
         component={ProductDetailsScreen}
-        options={{title: 'Product Details'}}
       />
     </Stack.Navigator>
   );
@@ -50,19 +48,14 @@ const HomeStack = () => {
 
 const GameStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
         name="GameMain"
         component={GameScreen}
-        options={{title: 'Play & Win'}}
       />
       <Stack.Screen
         name="GamePlay"
         component={GamePlayScreen}
-        options={{
-          presentation: 'modal',
-          title: 'Game Challenge',
-        }}
       />
     </Stack.Navigator>
   );
@@ -119,6 +112,7 @@ const AppNavigator = () => {
       <Tab.Screen name="Cart" component={CartScreen}
         options={{
         tabBarBadge: cartItemCount > 0 ? cartItemCount : undefined,
+        headerShown: false
       }}/>
     </Tab.Navigator>
   );

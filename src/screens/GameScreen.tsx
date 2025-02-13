@@ -10,6 +10,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {RootState} from '../store';
+import Header from '../components/Header';
 
 const GameScreen = () => {
   const navigation = useNavigation();
@@ -18,8 +19,9 @@ const GameScreen = () => {
   );
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <Header title="Games" />
+      <ScrollView>
         <Image
           source={require('../assets/game-banner.png')}
           style={styles.banner}
@@ -27,9 +29,62 @@ const GameScreen = () => {
         <View style={styles.content}>
           <Text style={styles.title}>Play & Win Discounts!</Text>
           <Text style={styles.description}>
-            Test your skills in our exciting game and win exclusive discount
-            codes! The higher your score, the better the discount.
+            Challenge your memory in our exciting card-matching game and win exclusive discount codes! Match pairs of cards in fewer moves to earn bigger rewards.
           </Text>
+
+          <View style={styles.instructionsContainer}>
+            <Text style={styles.sectionTitle}>How to Play</Text>
+            <View style={styles.instructionItem}>
+              <Text style={styles.instructionNumber}>1</Text>
+              <Text style={styles.instructionText}>Tap cards to flip them and reveal discount values</Text>
+            </View>
+            <View style={styles.instructionItem}>
+              <Text style={styles.instructionNumber}>2</Text>
+              <Text style={styles.instructionText}>Find matching pairs of discount cards</Text>
+            </View>
+            <View style={styles.instructionItem}>
+              <Text style={styles.instructionNumber}>3</Text>
+              <Text style={styles.instructionText}>Complete the game in fewer moves to earn bigger discounts</Text>
+            </View>
+          </View>
+
+          <View style={styles.rewardsContainer}>
+            <Text style={styles.sectionTitle}>Rewards</Text>
+            <View style={styles.rewardsList}>
+              <View style={styles.rewardItem}>
+                <Text style={styles.rewardIcon}>🏆</Text>
+                <View style={styles.rewardInfo}>
+                  <Text style={styles.rewardTitle}>Master Player</Text>
+                  <Text style={styles.rewardText}>Complete in 10 moves or less</Text>
+                  <Text style={styles.discountValue}>30% OFF</Text>
+                </View>
+              </View>
+              <View style={styles.rewardItem}>
+                <Text style={styles.rewardIcon}>🥈</Text>
+                <View style={styles.rewardInfo}>
+                  <Text style={styles.rewardTitle}>Expert Player</Text>
+                  <Text style={styles.rewardText}>Complete in 15 moves or less</Text>
+                  <Text style={styles.discountValue}>20% OFF</Text>
+                </View>
+              </View>
+              <View style={styles.rewardItem}>
+                <Text style={styles.rewardIcon}>🥉</Text>
+                <View style={styles.rewardInfo}>
+                  <Text style={styles.rewardTitle}>Skilled Player</Text>
+                  <Text style={styles.rewardText}>Complete in 20 moves or less</Text>
+                  <Text style={styles.discountValue}>10% OFF</Text>
+                </View>
+              </View>
+              <View style={styles.rewardItem}>
+                <Text style={styles.rewardIcon}>🎮</Text>
+                <View style={styles.rewardInfo}>
+                  <Text style={styles.rewardTitle}>Game Participant</Text>
+                  <Text style={styles.rewardText}>Complete in more than 20 moves</Text>
+                  <Text style={styles.discountValue}>5% OFF</Text>
+                </View>
+              </View>
+            </View>
+          </View>
 
           <View style={styles.scoreContainer}>
             <Text style={styles.scoreLabel}>High Score:</Text>
@@ -80,12 +135,101 @@ const GameScreen = () => {
             )}
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#2d3436',
+    marginBottom: 16,
+  },
+  instructionsContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    marginVertical: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  instructionItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  instructionNumber: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#00b894',
+    color: '#fff',
+    textAlign: 'center',
+    lineHeight: 28,
+    marginRight: 12,
+    fontWeight: 'bold',
+  },
+  instructionText: {
+    flex: 1,
+    fontSize: 16,
+    color: '#2d3436',
+    lineHeight: 22,
+  },
+  rewardsContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    marginVertical: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  rewardsList: {
+    gap: 16,
+  },
+  rewardItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    padding: 12,
+  },
+  rewardIcon: {
+    fontSize: 32,
+    marginRight: 12,
+  },
+  rewardInfo: {
+    flex: 1,
+  },
+  rewardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2d3436',
+    marginBottom: 4,
+  },
+  rewardText: {
+    fontSize: 14,
+    color: '#636e72',
+    marginBottom: 4,
+  },
+  discountValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#00b894',
+  },
   container: {
     flex: 1,
     backgroundColor: '#F2F2F7',
@@ -164,20 +308,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
-  rewardsContainer: {
-    backgroundColor: 'white',
-    padding: 16,
-    borderRadius: 12,
-  },
   rewardsTitle: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 12,
-  },
-  rewardItem: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 8,
   },
 });
 

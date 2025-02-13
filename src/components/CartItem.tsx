@@ -11,11 +11,9 @@ interface CartItemProps extends Product{
 
 const CartItem: React.FC<CartItemProps> = ({
   id,
-  title,
+  name,
   quantity,
-  description,
   price,
-  images,
   thumbnail,
   onUpdateQuantity,
   onRemove,
@@ -24,7 +22,7 @@ const CartItem: React.FC<CartItemProps> = ({
     <View style={styles.container}>
       <Image source={{ uri: thumbnail }} style={styles.image} />
       <View style={styles.content}>
-        <Text style={styles.name}>{title}</Text>
+        <Text style={styles.name}>{name}</Text>
         <Text style={styles.price}>${price.toFixed(2)}</Text>
         <View style={styles.quantityContainer}>
           <TouchableOpacity

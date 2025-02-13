@@ -1,4 +1,3 @@
-// src/components/ProductCard.tsx
 import React from 'react';
 import { 
   View, 
@@ -22,13 +21,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onPress }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image 
-        source={{ uri: product.thumbnail }} 
+        source={{ uri: product.images[0] }} 
         style={styles.image} 
         resizeMode="cover"
       />
       <View style={styles.content}>
         <Text style={styles.name} numberOfLines={1}>
-          {product.title}
+          {product.name}
         </Text>
         <Text style={styles.description} numberOfLines={2}>
           {product.description}
@@ -45,6 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 12,
     marginBottom: 16,
+    marginHorizontal: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     marginBottom: 8,
-    height: 40, // Ensure consistent 2-line height
+    height: 40, 
   },
   price: {
     fontSize: 18,

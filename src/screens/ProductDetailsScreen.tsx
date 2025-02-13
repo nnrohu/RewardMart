@@ -8,13 +8,15 @@ import {
   Dimensions,
   Image,
 } from 'react-native';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 import {RootStackParamList} from '../navigation/AppNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PaginationDot from '../components/PaginationDot';
 import {addToCart} from '../store/cartSlice';
+import Header from '../components/Header';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type ProductDetailsScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -26,6 +28,7 @@ const {width} = Dimensions.get('window');
 const ProductDetailsScreen: React.FC = () => {
   const route = useRoute<ProductDetailsScreenRouteProp>();
   const {product} = route.params;
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const dispatch = useDispatch();
 
@@ -46,8 +49,14 @@ const ProductDetailsScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View>
+    <View style={styles.container}>
+      <Header 
+        title="Product Details" 
+        showBack={true} 
+        onBack={() => navigation.goBack()}
+      />
+      <ScrollView>
+        <View>
         <Carousel
           data={product.images}
           renderItem={renderCarouselItem}
@@ -61,7 +70,7 @@ const ProductDetailsScreen: React.FC = () => {
         <PaginationDot images={product.images} activeSlide={activeSlide} />
       </View>
       <View style={styles.content}>
-        <Text style={styles.name}>{product.title}</Text>
+        <Text style={styles.name}>{product.name}</Text>
         <Text style={styles.price}>${product.price.toFixed(2)}</Text>
         <Text style={styles.description}>{product.description}</Text>
         <TouchableOpacity style={styles.addButton} onPress={handleAddToCart}>
@@ -69,7 +78,8 @@ const ProductDetailsScreen: React.FC = () => {
           <Text style={styles.addButtonText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
